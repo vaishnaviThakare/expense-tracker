@@ -10,6 +10,12 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes); 
 
+const expensesRoutes = require('./routes/expenses');
+app.use('/api/expenses', expensesRoutes);
+
+const categoryRoutes = require('./routes/categories');
+app.use('/api/categories', categoryRoutes);
+
 app.get('/api/test-db', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
