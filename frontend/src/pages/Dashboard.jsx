@@ -1,3 +1,4 @@
+import Insights from '../components/Insights';
 import { useState, useEffect } from 'react';
 import api from '../api';
 
@@ -21,6 +22,8 @@ function Dashboard() {
 
   return (
     <div>
+      <Insights />
+
       <form onSubmit={handleSubmit}>
         <input placeholder="Amount" value={form.amount}
           onChange={(e) => setForm({ ...form, amount: e.target.value })} />

@@ -1,10 +1,54 @@
 const express = require('express');
 const pool = require('../db');
 const authenticateToken = require('../middleware/auth');
-const guessCategory = require('../utils/categorize');   // ← new
+const guessCategory = require('../utils/categorize');
 const router = express.Router();
 
-// ... GET route stays the same ...
+// INSIGHTS — must come before any /:id-style routes, so it's not swallowed as a param
+router.get('/insights', authenticateToken, async (req, res) => {
+  try {
+    const thisWeek = await pool.query(
+      `SELECT c.name, SUM(e.amount) as total FROM expenses e
+       JOIN categories c ON e.category_id = c.id
+       WHERE e.user_id=$1 AND e.spent_at >= NOW() - INTERVAL '7 days'
+       GROUP BY c.name`,
+      [req.userId]
+    );
+
+    const lastWeek = await pool.query(
+      `SELECT c.name, SUM(e.amount) as total FROM expenses e
+       JOIN categories c ON e.category_id = c.id
+       WHERE e.user_id=$1 AND e.spent_at >= NOW() - INTERVAL '14 days'
+         AND e.spent_at < NOW() - INTERVAL '7 days'
+       GROUP BY c.name`,
+      [req.userId]
+    );
+
+    res.json({ thisWeek: thisWeek.rows, lastWeek: lastWeek.rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// GET all expenses for the logged-in user
+router.get('/', authenticateToken, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT expenses.id, expenses.amount, expenses.description, expenses.spent_at,
+              categories.name AS category_name
+       FROM expenses
+       LEFT JOIN categories ON expenses.category_id = categories.id
+       WHERE expenses.user_id = $1
+       ORDER BY expenses.spent_at DESC`,
+      [req.userId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 // POST a new expense for the logged-in user
 router.post('/', authenticateToken, async (req, res) => {
@@ -43,6 +87,23 @@ router.post('/', authenticateToken, async (req, res) => {
   }
 });
 
-// ... DELETE route stays the same ...
+// DELETE an expense (only if it belongs to the logged-in user)
+router.delete('/:id', authenticateToken, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'DELETE FROM expenses WHERE id = $1 AND user_id = $2 RETURNING *',
+      [req.params.id, req.userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Expense not found' });
+    }
+
+    res.json({ message: 'Expense deleted' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 module.exports = router;
