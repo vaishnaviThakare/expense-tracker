@@ -20,25 +20,21 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Email"
-          type="email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-        <input
-          placeholder="Password"
-          type="password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-        />
-        <button type="submit">Login</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <p>No account? <Link to="/register">Register</Link></p>
+    <div className="auth-page">
+      <div className="auth-card">
+        <span className="eyebrow">Welcome back</span>
+        <h1 className="wordmark">Spendly</h1>
+        <p className="auth-sub">Sign in to see where it went.</p>
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <input className="field" placeholder="Email" type="email"
+            value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+          <input className="field" placeholder="Password" type="password"
+            value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+          <button className="btn-primary" type="submit">Login</button>
+        </form>
+        {error && <p className="error-text">{error}</p>}
+        <p className="auth-footer">No account? <Link className="link-brass" to="/register">Register</Link></p>
+      </div>
     </div>
   );
 }
