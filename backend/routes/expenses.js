@@ -105,5 +105,16 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+//PUT an expense (only if it belongs to the logged-in user)
+router.put('/:id', authenticateToken, async (req, res) => {
+  const { amount, description, category_id, spent_at } = req.body;
+  const result = await pool.query(
+    `UPDATE expenses SET amount=$1, description=$2, category_id=$3, spent_at=$4
+     WHERE id=$5 AND user_id=$6 RETURNING *`,
+    [amount, description, category_id, spent_at, req.params.id, req.userId]
+  );
+  if (result.rows.length === 0) return res.status(404).json({ error: 'Not found' });
+  res.json(result.rows[0]);
+});
 
 module.exports = router;
