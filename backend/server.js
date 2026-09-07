@@ -16,6 +16,7 @@ app.use('/api/expenses', expensesRoutes);
 const categoryRoutes = require('./routes/categories');
 app.use('/api/categories', categoryRoutes);
 
+
 app.get('/api/test-db', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
@@ -26,9 +27,7 @@ app.get('/api/test-db', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-  res.json({ message: 'Spendly API is running' });
-});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
