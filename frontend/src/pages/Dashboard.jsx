@@ -3,14 +3,14 @@ import api from '../api';
 import Insights from '../components/Insights';
 import { getCategoryColor, getCategoryIcon } from '../utils/categoryColors';
 import { useRef } from 'react';
+import logo from '../assets/spendly-logo.svg';
 
 
-function getUserEmailFromToken() {
+function getUserFromToken() {
   const token = localStorage.getItem('token');
   if (!token) return null;
   try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.email || null;
+    return JSON.parse(atob(token.split('.')[1]));
   } catch {
     return null;
   }
@@ -39,6 +39,11 @@ function formatRangeLabel(from, to) {
 }
 
 function Dashboard() {
+  const user = getUserFromToken();
+  const userEmail = user?.email || null;
+  const userName = user?.name || null;
+  const userInitial = userName ? userName[0].toUpperCase() : (userEmail ? userEmail[0].toUpperCase() : '?');
+
   const [activeTab, setActiveTab] = useState('overview');
   const [expenses, setExpenses] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -57,8 +62,10 @@ function Dashboard() {
   const defaultRange = getCurrentMonthRange();
   const [dateFrom, setDateFrom] = useState(defaultRange.start);
   const [dateTo, setDateTo] = useState(defaultRange.end);
-const [dateRangeOpen, setDateRangeOpen] = useState(false);
-const dateRangeRef = useRef(null);
+  const [dateRangeOpen, setDateRangeOpen] = useState(false);
+  const dateRangeRef = useRef(null);
+  const [editingName, setEditingName] = useState(false);
+  const [nameInput, setNameInput] = useState(userName || '');
   
   const fetchExpenses = async () => {
     const res = await api.get('/expenses');
@@ -120,13 +127,19 @@ const dateRangeRef = useRef(null);
     fetchExpenses();
   };
 
+  const handleNameUpdate = async (e) => {
+  e.preventDefault();
+  const res = await api.put('/auth/profile', { name: nameInput });
+  // Since name lives in the JWT, not just the DB, update won't reflect until next login.
+  // Simplest: just show a success note and prompt re-login for it to fully refresh everywhere.
+  alert('Name updated. Please log out and log back in to see it everywhere.');
+  setEditingName(false);
+};
+
   const logout = () => {
     localStorage.removeItem('token');
     window.location.href = '/login';
   };
-
-  const userEmail = getUserEmailFromToken();
-  const userInitial = userEmail ? userEmail[0].toUpperCase() : '?';
 
   const filteredExpenses = expenses.filter(exp => {
     const matchesSearch =
@@ -149,19 +162,28 @@ const dateRangeRef = useRef(null);
   return (
     <div className="app-shell">
       <header className="topbar">
-        <h1 className="wordmark">Spendly</h1>
+        {/* <h1 className="wordmark">Spendly</h1> */}
+        <img src={logo} alt="Spendly" className="brand-logo-dashboard" />
         <div className="topbar-right">
           <div className="user-menu" ref={menuRef}>
             <div className="user-chip" onClick={() => setMenuOpen((prev) => !prev)}>
               <span className="user-avatar">{userInitial}</span>
-              <span className="user-name">{userEmail ? userEmail.split('@')[0] : 'Account'}</span>
+             <span className="user-name">{userName || (userEmail ? userEmail.split('@')[0] : 'Account')}</span>
               <span className="chevron">▾</span>
             </div>
             {menuOpen && (
-              <div className="user-dropdown">
-                <div className="dropdown-email">{userEmail || 'Not signed in'}</div>
-                <button className="dropdown-item" onClick={logout}>Log out</button>
-              </div>
+             <div className="user-dropdown">
+  <div className="dropdown-email">{userEmail || 'Not signed in'}</div>
+  {!editingName ? (
+    <button className="action-item" onClick={() => setEditingName(true)}>✏️ Edit name</button>
+  ) : (
+    <form onSubmit={handleNameUpdate} style={{ padding: '8px 10px', display: 'flex', gap: 6 }}>
+      <input className="field" value={nameInput} onChange={(e) => setNameInput(e.target.value)} style={{ fontSize: 13 }} />
+      <button type="submit" className="btn-primary" style={{ margin: 0, padding: '6px 10px', fontSize: 12 }}>Save</button>
+    </form>
+  )}
+  <button className="dropdown-item" onClick={logout}>Log out</button>
+</div>
             )}
           </div>
         </div>

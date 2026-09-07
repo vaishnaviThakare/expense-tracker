@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1695" height="928" viewBox="0 0 1695 928">
+  <g fill="none" stroke="#00583E" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Cards -->
+    <path d="M255 310 L434 251 Q446 248 449 260 L454 283" stroke-width="24"/>
+    <path d="M232 343 L456 302 Q471 299 474 315 L484 367" stroke-width="24"/>
+
+    <!-- Wallet body -->
+    <path d="M217 358
+             Q217 348 227 348
+             H483
+             Q519 348 519 384
+             V550
+             Q519 585 484 585
+             H235
+             Q211 585 211 558
+             V386
+             Q211 358 217 358 Z"
+          stroke-width="18"/>
+
+    <!-- Wallet clasp -->
+    <path d="M467 440
+             H520
+             Q538 440 538 458
+             V493
+             Q538 510 520 510
+             H466
+             Q434 510 434 478
+             Q434 440 467 440 Z"
+          stroke-width="18"/>
+  </g>
+
+  <!-- Rupee badge -->
+  <circle cx="353" cy="570" r="84" fill="#00734F"/>
+  <text x="353" y="619" text-anchor="middle"
+        fill="#FFFFFF"
+        font-family="Arial, DejaVu Sans, sans-serif"
+        font-size="103"
+        font-weight="500">₹</text>
+
+  <!-- Wordmark -->
+  <text x="620" y="535"
+        fill="#00583E"
+        font-family="Arial, DejaVu Sans, sans-serif"
+        font-size="225"
+        font-weight="800"
+        letter-spacing="-8">Spendly</text>
+</svg>

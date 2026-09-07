@@ -3,9 +3,21 @@ import api from '../api';
 import CategoryChart from './CategoryChart';
 import { getCategoryColor, getCategoryIcon } from '../utils/categoryColors';
 
+function getUserFromToken() {
+  const token = localStorage.getItem('token');
+  if (!token) return null;
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch {
+    return null;
+  }
+}
 function Insights() {
   const [insights, setInsights] = useState(null);
   const [expenses, setExpenses] = useState([]);
+
+  const user = getUserFromToken();
+  const firstName = user?.name ? user.name.split(' ')[0] : (user?.email ? user.email.split('@')[0] : 'there');
 
   useEffect(() => {
     api.get('/expenses/insights').then(res => setInsights(res.data));
@@ -46,7 +58,7 @@ function Insights() {
 
   return (
     <>
-      <p className="greeting">Hello 👋</p>
+      <p className="greeting">Hello, {firstName}!</p>
       <h2 className="page-heading">Overview</h2>
       <p className="page-subheading">Here's how your spending looks this week.</p>
 
@@ -140,9 +152,9 @@ function Insights() {
             <p className="insight-empty">No spending yet this week.</p>
           )}
         </section>
-      </div>
+      
 
-      <section className="card" style={{ marginTop: 16 }}>
+      <section className="card">
         <div className="section-header">
           <h2 className="section-title">Recent Transactions</h2>
           <div className="double-rule" />
@@ -166,6 +178,7 @@ function Insights() {
           })}
         </ul>
       </section>
+      </div>
     </>
   );
 }
