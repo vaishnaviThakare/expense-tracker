@@ -26,5 +26,9 @@ app.get('/api/test-db', async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Spendly API is running' });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
