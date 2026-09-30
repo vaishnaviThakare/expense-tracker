@@ -783,3 +783,27 @@ a { color: inherit; }
   width: 200px;
   height: auto;
 }
+@media (max-width: 720px) {
+  .content-area {
+    padding: 20px 16px 60px;
+    max-width: 100%;
+  }
+  .page-heading { font-size: 22px; }
+  .search-box { flex: 1 1 auto; }
+  .entries-toolbar { gap: 8px; }
+}
+@media (max-width: 720px) {
+  .sidebar {
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  .nav-item {
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13.5px;
+  }
+  .nav-item.active {
+    background: var(--brand);
+    color: #fff;
+  }
+}

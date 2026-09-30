@@ -315,7 +315,13 @@ function Dashboard() {
                   <span></span>
                 </div>
                 <ul className="ledger-list">
-                  {filteredExpenses.length === 0 && <p className="insight-empty">No entries found.</p>}
+                  {filteredExpenses.length === 0 && (
+  <div style={{ textAlign: 'center', padding: '48px 20px', color: 'var(--ink-muted)' }}>
+    <div style={{ fontSize: 32, marginBottom: 12 }}>🔍</div>
+    <p style={{ fontSize: 15, marginBottom: 4, color: 'var(--ink)' }}>No expenses yet</p>
+    <p style={{ fontSize: 13 }}>Add your first entry to start tracking.</p>
+  </div>
+)}
                   {paginatedExpenses.map((exp) => {
                     const catName = exp.category_name || 'Uncategorized';
                     const color = getCategoryColor(catName);
