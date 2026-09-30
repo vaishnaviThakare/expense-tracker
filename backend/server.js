@@ -5,7 +5,11 @@ const pool = require('./db');
 const authRoutes = require('./routes/auth');
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+}));
+
 app.use(express.json());
 
 app.use('/api/auth', authRoutes); 
@@ -16,6 +20,9 @@ app.use('/api/expenses', expensesRoutes);
 const categoryRoutes = require('./routes/categories');
 app.use('/api/categories', categoryRoutes);
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Spendly API is running' });
+});
 
 app.get('/api/test-db', async (req, res) => {
   try {
@@ -26,8 +33,6 @@ app.get('/api/test-db', async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
-
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
