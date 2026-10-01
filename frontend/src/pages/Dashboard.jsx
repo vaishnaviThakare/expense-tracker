@@ -191,17 +191,16 @@ function Dashboard() {
 
       <div className="shell-body">
         <nav className="sidebar">
-          <button className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveTab('overview')}>
-            <span className="nav-dot" /> Overview
-          </button>
-          <button className={`nav-item ${activeTab === 'add' ? 'active' : ''}`} onClick={() => setActiveTab('add')}>
-            <span className="nav-dot" /> Add Entry
-          </button>
-          <button className={`nav-item ${activeTab === 'entries' ? 'active' : ''}`} onClick={() => setActiveTab('entries')}>
-            <span className="nav-dot" /> Entries
-          </button>
-
-        </nav>
+  <button className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveTab('overview')}>
+    <span className="nav-dot" /><span className="nav-icon">🏠</span> Overview
+  </button>
+  <button className={`nav-item ${activeTab === 'add' ? 'active' : ''}`} onClick={() => setActiveTab('add')}>
+    <span className="nav-dot" /><span className="nav-icon">➕</span> Add Entry
+  </button>
+  <button className={`nav-item ${activeTab === 'entries' ? 'active' : ''}`} onClick={() => setActiveTab('entries')}>
+    <span className="nav-dot" /><span className="nav-icon">📋</span> Entries
+  </button>
+</nav>
 
         <main className="content-area">
           {activeTab === 'overview' && <Insights />}
