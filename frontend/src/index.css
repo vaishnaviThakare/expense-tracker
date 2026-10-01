@@ -854,3 +854,51 @@ a { color: inherit; }
     color: #fff;
   }
 }
+@media (max-width: 720px) {
+  .auth-split-inner { flex-direction: column; }
+
+  .auth-brand-panel {
+    padding: 32px 24px 20px;
+    text-align: center;
+    align-items: center;
+  }
+  .brand-logo-row { margin-bottom: 20px; justify-content: center; }
+  .brand-logo-img { height: 44px; }
+
+  .brand-headline { font-size: 26px; text-align: center; }
+  .brand-rule { margin: 12px auto; }
+  .brand-sub {
+    font-size: 13.5px;
+    max-width: 320px;
+    margin: 0 auto 20px;
+    text-align: center;
+  }
+
+  .brand-features {
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 4px;
+  }
+  .brand-feature { text-align: center; max-width: 120px; }
+  .brand-feature-icon { margin: 0 auto 8px; }
+
+  .auth-form-panel {
+    padding: 16px 20px 32px;
+    background: var(--bg);
+  }
+  .auth-card {
+    max-width: 100%;
+    padding: 28px 22px;
+    box-shadow: none;
+    border-top: 1px solid var(--line);
+    border-radius: 20px 20px 0 0;
+    margin-top: -16px;
+  }
+  .wordmark { font-size: 22px; }
+}
+
+@media (max-width: 380px) {
+  .brand-headline { font-size: 23px; }
+  .brand-features { gap: 16px; }
+  .brand-feature { max-width: 100px; }
+}
