@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
-import logo from '../assets/spendly-logo.svg';
+import logo from '../assets/spendly-logo.png';
 
 function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -51,19 +52,27 @@ function Login() {
             <form className="auth-form" onSubmit={handleSubmit}>
               <div className="field-group">
                 <span className="field-label">Email address</span>
-                <input className="field" placeholder="you@example.com" type="email"
+                <input className="field field-with-icon" placeholder="you@example.com" type="email"
                   value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                <span className="field-icon">✉️</span>
               </div>
               <div className="field-group">
                 <span className="field-label">Password</span>
-                <input className="field" placeholder="Enter your password" type="password"
+                <input className="field field-with-icon" placeholder="Enter your password"
+                  type={showPassword ? 'text' : 'password'}
                   value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+                <button type="button" className="field-icon" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? '🙈' : '👁️'}
+                </button>
+              </div>
+              <div className="forgot-link-row">
+                <Link to="/forgot-password" className="link-brass" style={{ fontSize: 12.5 }}>Forgot password?</Link>
               </div>
               <button className="btn-primary" type="submit">🔒 Log in</button>
-              <Link to="/forgot-password" className="link-brass" style={{ fontSize: 12.5, textAlign: 'right' }}>Forgot password?</Link>
             </form>
             {error && <p className="error-text">{error}</p>}
-            <p className="auth-footer">Don't have an account? <Link className="link-brass" to="/register">Sign up</Link></p>
+            <div className="auth-divider">or</div>
+            <p className="auth-footer" style={{ margin: 0 }}>Don't have an account? <Link className="link-brass" to="/register">Sign up</Link></p>
           </div>
         </div>
       </div>

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
-import logo from '../assets/spendly-logo.svg';
+import logo from '../assets/spendly-logo.png';
 
 function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,14 +56,18 @@ function Register() {
               </div>
               <div className="field-group">
                 <span className="field-label">Email address</span>
-                <input className="field" placeholder="you@example.com" type="email"
+                <input className="field field-with-icon" placeholder="you@example.com" type="email"
                   value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                <span className="field-icon">✉️</span>
               </div>
-
               <div className="field-group">
                 <span className="field-label">Password</span>
-                <input className="field" placeholder="Create a password" type="password"
+                <input className="field field-with-icon" placeholder="Create a password"
+                  type={showPassword ? 'text' : 'password'}
                   value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+                <button type="button" className="field-icon" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? '🙈' : '👁️'}
+                </button>
               </div>
               <button className="btn-primary" type="submit">Sign up</button>
             </form>

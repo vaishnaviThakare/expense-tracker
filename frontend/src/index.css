@@ -855,50 +855,86 @@ a { color: inherit; }
   }
 }
 @media (max-width: 720px) {
+  .auth-split { background: var(--bg); }
   .auth-split-inner { flex-direction: column; }
 
   .auth-brand-panel {
-    padding: 32px 24px 20px;
+    padding: 36px 24px 24px;
     text-align: center;
     align-items: center;
+    background: var(--bg);
   }
-  .brand-logo-row { margin-bottom: 20px; justify-content: center; }
-  .brand-logo-img { height: 44px; }
+  .brand-logo-row { margin-bottom: 24px; justify-content: center; }
+  .brand-logo-img { height: 42px; }
 
-  .brand-headline { font-size: 26px; text-align: center; }
-  .brand-rule { margin: 12px auto; }
+  .brand-headline { font-size: 28px; text-align: center; font-style: normal; font-family: var(--font-display); }
+  .brand-rule { margin: 16px auto; }
   .brand-sub {
-    font-size: 13.5px;
+    font-size: 14px;
     max-width: 320px;
-    margin: 0 auto 20px;
+    margin: 0 auto 28px;
     text-align: center;
+    line-height: 1.6;
   }
 
   .brand-features {
-    gap: 24px;
+    gap: 0;
     justify-content: center;
-    margin-bottom: 4px;
+    align-items: flex-start;
+    margin-bottom: 8px;
   }
-  .brand-feature { text-align: center; max-width: 120px; }
-  .brand-feature-icon { margin: 0 auto 8px; }
+  .brand-feature {
+    text-align: center;
+    max-width: 140px;
+    padding: 0 20px;
+    position: relative;
+  }
+  .brand-feature:first-child { border-right: 1px solid var(--line); }
+  .brand-feature-icon { margin: 0 auto 10px; width: 44px; height: 44px; font-size: 18px; }
+  .brand-feature-title { font-size: 14.5px; }
+  .brand-feature-desc { font-size: 12.5px; }
 
   .auth-form-panel {
-    padding: 16px 20px 32px;
+    padding: 0 16px 24px;
     background: var(--bg);
   }
   .auth-card {
     max-width: 100%;
-    padding: 28px 22px;
-    box-shadow: none;
-    border-top: 1px solid var(--line);
-    border-radius: 20px 20px 0 0;
-    margin-top: -16px;
+    padding: 32px 24px;
+    box-shadow: var(--shadow);
+    border-radius: 24px;
+    border: none;
   }
-  .wordmark { font-size: 22px; }
-}
+  .wordmark { font-size: 24px; }
 
-@media (max-width: 380px) {
-  .brand-headline { font-size: 23px; }
-  .brand-features { gap: 16px; }
-  .brand-feature { max-width: 100px; }
+  .field-group { position: relative; }
+  .field-icon {
+    position: absolute;
+    right: 2px;
+    bottom: 10px;
+    color: var(--ink-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 16px;
+  }
+  .field-with-icon { padding-right: 28px; }
+
+  .forgot-link-row { display: flex; justify-content: flex-end; margin-top: -8px; }
+
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 16px;
+    color: var(--ink-muted);
+    font-size: 13px;
+  }
+  .auth-divider::before, .auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
 }
