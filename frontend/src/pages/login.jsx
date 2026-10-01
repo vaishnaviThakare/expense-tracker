@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
-import logo from '../assets/spendly-logo.png';
+import logo from '../assets/spendly-logo.svg';
 
 function Login() {
   const [form, setForm] = useState({ email: '', password: '' });

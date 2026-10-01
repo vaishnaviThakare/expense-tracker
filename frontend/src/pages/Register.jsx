@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
-import logo from '../assets/spendly-logo.png';
+import logo from '../assets/spendly-logo.svg';
 
 function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
