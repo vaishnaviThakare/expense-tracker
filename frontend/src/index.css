@@ -95,6 +95,19 @@ a { color: inherit; }
 }
 .field::placeholder { color: var(--ink-muted); }
 .field:focus { border-bottom-color: var(--brand); }
+.field-group { position: relative; }
+  .field-icon {
+    position: absolute;
+    right: 2px;
+    bottom: 10px;
+    color: var(--ink-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 16px;
+  }
+  .field-with-icon { padding-right: 28px; }
 
 .btn-primary {
   margin-top: 8px;
@@ -865,7 +878,7 @@ a { color: inherit; }
     background: var(--bg);
   }
   .brand-logo-row { margin-bottom: 24px; justify-content: center; }
-  .brand-logo-img { height: 42px; }
+  .brand-logo-img { height: 60px; }
 
   .brand-headline { font-size: 28px; text-align: center; font-style: normal; font-family: var(--font-display); }
   .brand-rule { margin: 16px auto; }
@@ -906,20 +919,6 @@ a { color: inherit; }
     border: none;
   }
   .wordmark { font-size: 24px; }
-
-  .field-group { position: relative; }
-  .field-icon {
-    position: absolute;
-    right: 2px;
-    bottom: 10px;
-    color: var(--ink-muted);
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: 16px;
-  }
-  .field-with-icon { padding-right: 28px; }
 
   .forgot-link-row { display: flex; justify-content: flex-end; margin-top: -8px; }
 
